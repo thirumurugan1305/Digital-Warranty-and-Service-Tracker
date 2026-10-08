@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [authError, setAuthError] = useState(null);
 
-  // Restore session on mount
   useEffect(() => {
     const initializeAuth = async () => {
       const storedToken = localStorage.getItem('warranty_tracker_token');
