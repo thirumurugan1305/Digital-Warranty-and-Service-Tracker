@@ -1,193 +1,444 @@
 # Digital Warranty & Product Service Tracker
 
-[![Stack](https://img.shields.io/badge/Stack-React%20%7C%20Node.js%20%7C%20Express%20%7C%20MongoDB-blue.svg)](https://github.com/)
-[![Cost](https://img.shields.io/badge/Cost-%E2%82%B90%20Zero%20Paid%20APIs-emerald.svg)](https://github.com/)
+[![Stack](https://img.shields.io/badge/Stack-React%20%7C%20Node.js%20%7C%20Express%20%7C%20MongoDB-blue.svg)](https://github.com/thirumurugan1305/Digital-Warranty-and-Service-Tracker)
+[![Cost](https://img.shields.io/badge/Cost-%E2%82%B90%20%7C%20Zero%20Paid%20APIs-emerald.svg)](https://github.com/thirumurugan1305/Digital-Warranty-and-Service-Tracker)
 [![License](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 
-A portfolio-ready, full-stack web application designed to digitally organize consumer products, track warranty periods and expiration dates automatically, maintain detailed repair and service logs, receive in-app notifications, and securely manage physical invoices and receipt documents.
+A full-stack web application for digitally managing consumer products, warranty periods, service history, repair expenses, notifications, and warranty-related documents.
 
 ---
 
-## 📌 Problem Statement & Objectives
+## 📌 Problem Statement
 
-Managing consumer electronics, home appliances, and vehicle warranties with physical paper receipts is error-prone. Invoices fade, warranty cards get lost, and users miss repair claim windows before warranties expire.
+Managing warranties for electronics, appliances, and other consumer products using physical invoices and warranty cards can be difficult.
 
-**Digital Warranty Tracker** solves this by providing:
-* **Automated Expiration Engine**: Automatically calculates exact warranty expiration dates based on purchase date + warranty duration (months) and tracks remaining coverage days.
-* **Smart Status Evaluator**: Dynamically tags products as `ACTIVE`, `EXPIRING SOON`, or `EXPIRED`.
-* **Service & Maintenance Ledger**: Maintains chronological repair records, service center contacts, repair status, and total out-of-pocket expenditure statistics.
-* **Multi-Tenant Document Vault**: Securely uploads and streams purchase bills, warranty certificates, and service receipts using authenticated local file access.
+Common problems include:
 
----
+- Losing or damaging purchase invoices
+- Forgetting warranty expiration dates
+- Missing warranty claim periods
+- Maintaining service and repair records manually
+- Having no centralized place for warranty-related documents
+- Difficulty tracking total repair expenses
 
-## 💰 ₹0 Cost Guarantee
-
-This application was engineered with a strict **₹0 cost requirement**:
-* **Zero Paid APIs**: No reliance on paid cloud services, SMS gateways, or paid API credits.
-* **Open Source & Local Infrastructure**: Powered entirely by React, Express, local MongoDB, Node.js, Tailwind CSS, Lucide icons, and local disk storage (`backend/uploads/`).
-* **Authenticated Document Serving**: Local document files are streamed securely via Express handlers (`GET /api/documents/:productId/:filename`) without requiring paid S3 bucket storage.
+The **Digital Warranty & Product Service Tracker** provides a centralized platform to manage all of this information digitally.
 
 ---
 
-## 🛠️ Technology Stack
+## 🎯 Objectives
 
-### Frontend
-* **Core**: React 18, Vite
-* **Styling**: Tailwind CSS, Custom SaaS Design Tokens
-* **Navigation**: React Router v6
-* **Icons**: Lucide React
-* **HTTP Client**: Axios with JWT Interceptors
+The system is designed to:
 
-### Backend
-* **Runtime**: Node.js, Express.js
-* **Database**: MongoDB & Mongoose ORM
-* **Authentication**: JWT (JSON Web Tokens), bcryptjs
-* **File Processing**: Multer (Disk Storage)
+- Digitally register and manage products
+- Automatically calculate warranty expiration dates
+- Identify active, expiring, and expired warranties
+- Maintain service and repair history
+- Track repair and maintenance expenses
+- Generate in-app warranty notifications
+- Securely store and access warranty-related documents
+- Isolate each user's data using authenticated access
 
 ---
 
-## 📂 Project Architecture & Structure
+## ✨ Key Features
 
-```
+### 👤 User Authentication
+
+- User registration and login
+- Password hashing using `bcryptjs`
+- JWT-based authentication
+- Protected API routes
+- Persistent authenticated sessions
+
+### 📦 Product Management
+
+- Add products with purchase and warranty information
+- View all registered products
+- Edit product information
+- Delete products
+- View detailed product information
+
+### 🛡️ Warranty Tracking
+
+The system automatically calculates warranty expiration based on:
+
+```text
+Purchase Date + Warranty Duration
+
+Products are categorized as:
+
+ACTIVE
+EXPIRING SOON
+EXPIRED
+
+The default Expiring Soon threshold is 30 days.
+
+🔧 Service & Repair History
+
+Users can maintain service records containing:
+
+Service date
+Service center
+Service description
+Repair status
+Repair cost
+Additional notes
+
+The application also provides expense statistics based on recorded service history.
+
+🔔 Notifications
+
+The application automatically checks warranty periods and provides in-app notifications for relevant warranty conditions.
+
+📄 Document Management
+
+Users can upload warranty-related documents such as:
+
+Purchase invoices
+Warranty certificates
+Service receipts
+
+Supported formats:
+
+PDF
+JPEG
+PNG
+WEBP
+
+Maximum file size:
+
+10 MB
+
+Documents are accessed through authenticated backend routes rather than being exposed as a public static folder.
+
+🏗️ System Architecture
+                    ┌─────────────────────┐
+                    │       User          │
+                    │     Web Browser     │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │ React + Vite        │
+                    │ Frontend            │
+                    │ Tailwind CSS        │
+                    └──────────┬──────────┘
+                               │
+                         Axios / HTTP
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │ Node.js + Express   │
+                    │ REST API            │
+                    └──────────┬──────────┘
+                               │
+              ┌────────────────┼────────────────┐
+              │                │                │
+              ▼                ▼                ▼
+        ┌──────────┐    ┌──────────────┐   ┌────────────┐
+        │   JWT    │    │   Mongoose   │   │   Multer   │
+        │   Auth   │    │     ORM      │   │ File Upload│
+        └──────────┘    └──────┬───────┘   └─────┬──────┘
+                               │                 │
+                               ▼                 ▼
+                        ┌────────────┐     ┌─────────────┐
+                        │  MongoDB   │     │   uploads/  │
+                        │  Database  │     │   Storage   │
+                        └────────────┘     └─────────────┘
+🛠️ Technology Stack
+Frontend
+Technology	Purpose
+React	User interface
+Vite	Frontend development/build tool
+Tailwind CSS	Styling and responsive UI
+React Router	Client-side routing
+Axios	API communication
+Lucide React	UI icons
+Backend
+Technology	Purpose
+Node.js	Server runtime
+Express.js	REST API framework
+Mongoose	MongoDB object modeling
+JWT	Authentication and authorization
+bcryptjs	Password hashing
+Multer	Document upload handling
+Database
+MongoDB
+MongoDB Atlas for deployed environment
+Mongoose
+📂 Project Structure
 digital-warranty-tracker/
+│
 ├── frontend/
 │   ├── public/
 │   ├── src/
 │   │   ├── assets/
-│   │   ├── components/       # Navbar, Sidebar, ProductCard, WarrantyBadge, Modal
-│   │   ├── context/          # AuthContext, ProductContext
-│   │   ├── pages/            # Dashboard, MyProducts, AddProduct, Details, ServiceHistory, Documents, Notifications, Settings
-│   │   ├── services/         # Axios API Client with JWT interceptors
-│   │   ├── App.jsx           # App routing & providers
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── App.jsx
 │   │   ├── main.jsx
-│   │   └── index.css         # Tailwind & SaaS design system
+│   │   └── index.css
 │   ├── package.json
 │   └── vite.config.js
 │
 ├── backend/
-│   ├── config/               # db.js (MongoDB local connection & diagnostics)
-│   ├── controllers/          # authController, productController, serviceController, notificationController, documentController
-│   ├── middleware/           # authMiddleware (JWT protect), uploadMiddleware (Multer filter)
-│   ├── models/               # User, Product, ServiceRecord, Notification
-│   ├── routes/               # authRoutes, productRoutes, serviceRoutes, notificationRoutes, documentRoutes
-│   ├── services/             # warrantyService, notificationService, authService, productService, serviceRecordService
-│   ├── tests/                # run_tests.js, fullstack_integration_test.js, mongo_live_check.js
-│   ├── uploads/              # Protected local document files
-│   ├── server.js             # Express entry point
-│   └── .env                  # Environment variables
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   ├── tests/
+│   ├── uploads/
+│   ├── server.js
+│   └── .env
 │
 ├── README.md
 ├── PROJECT_STATUS.md
-└── package.json              # Root script runner
-```
+└── package.json
+🔐 Security & Data Isolation
 
----
+The application implements several security mechanisms.
 
-## 🔐 Security & Data Isolation Audit
+Password Hashing
 
-1. **Password Encryption**: All passwords are salted and hashed using `bcryptjs` (salt rounds 10). Raw passwords are never stored or returned in API responses.
-2. **JWT Authorization**: API routes check the HTTP header `Authorization: Bearer <token>`.
-3. **Tenant Isolation**: Database queries enforce `{ userId: req.user._id }`. Users cannot read, modify, or delete another user's products or service records.
-4. **Document Access Protection**: Documents are not exposed via raw static folders. The route `GET /api/documents/:productId/:filename` requires JWT authorization and verifies product ownership before streaming physical files.
+Passwords are hashed using bcryptjs before being stored in the database.
 
----
+Raw passwords are not stored as plain text.
 
-## 📡 REST API Reference
+JWT Authentication
 
-| Endpoint | Method | Auth | Description |
-| :--- | :--- | :--- | :--- |
-| `/api/health` | `GET` | Public | System status & health diagnostic check |
-| `/api/auth/register` | `POST` | Public | Create new account & return JWT |
-| `/api/auth/login` | `POST` | Public | Authenticate user & return JWT |
-| `/api/auth/me` | `GET` | User | Retrieve current user profile |
-| `/api/products` | `GET` | User | Fetch all products owned by user |
-| `/api/products` | `POST` | User | Register new product with warranty calculation |
-| `/api/products/:id` | `GET` | User | Fetch product details (ownership enforced) |
-| `/api/products/:id` | `PUT` | User | Update product details & recalculate warranty |
-| `/api/products/:id` | `DELETE` | User | Delete product, service logs & attached files |
-| `/api/products/:id/documents` | `POST` | User | Upload document attachment (PDF, JPEG, PNG, WEBP) |
-| `/api/services` | `GET` | User | Fetch service records for user |
-| `/api/services` | `POST` | User | Log repair or service entry |
-| `/api/services/stats` | `GET` | User | Compute total repair expense metrics |
-| `/api/notifications` | `GET` | User | Auto-scan warranties & return alerts |
-| `/api/notifications/read-all` | `PUT` | User | Mark all user notifications as read |
-| `/api/documents/:productId/:filename` | `GET` | User | Securely stream uploaded document file |
+Protected API requests require a JWT:
 
----
+Authorization: Bearer <token>
+User-Level Data Isolation
 
-## ⚡ Quick Start & Installation
+Database operations for user-owned resources are scoped using the authenticated user's ID.
 
-### Prerequisites
-* **Node.js** (v18+ recommended)
-* **MongoDB** installed and running locally on `mongodb://127.0.0.1:27017`
+For example:
 
-### 1. Clone & Install Dependencies
+{ userId: req.user._id }
 
-```bash
-# Clone repository
-cd digital-warranty-tracker
+This prevents one authenticated user from accessing another user's products and service records.
 
-# Install root, backend, and frontend dependencies
+Protected Documents
+
+Uploaded documents are not served through a public static directory.
+
+Document access requires:
+
+A valid JWT
+A valid product ID
+Ownership of the product
+A matching document record
+📡 REST API
+Endpoint	Method	Authentication	Description
+/api/health	GET	Public	API health check
+/api/auth/register	POST	Public	Register a user
+/api/auth/login	POST	Public	Authenticate a user
+/api/auth/me	GET	Required	Get current user
+/api/products	GET	Required	Get user's products
+/api/products	POST	Required	Create a product
+/api/products/:id	GET	Required	Get product details
+/api/products/:id	PUT	Required	Update product
+/api/products/:id	DELETE	Required	Delete product
+/api/products/:id/documents	POST	Required	Upload product document
+/api/services	GET	Required	Get service records
+/api/services	POST	Required	Create service record
+/api/services/stats	GET	Required	Get service expense statistics
+/api/notifications	GET	Required	Get warranty notifications
+/api/notifications/read-all	PUT	Required	Mark notifications as read
+/api/documents/:productId/:filename	GET	Required	Securely view a document
+💰 ₹0 Cost Approach
+
+This project was developed with a strict ₹0 cost requirement.
+
+The application does not depend on:
+
+Paid APIs
+Paid AI APIs
+Paid SMS services
+Paid cloud storage
+Paid subscriptions
+
+Development uses:
+
+React
+Node.js
+Express
+MongoDB
+Tailwind CSS
+Axios
+Lucide React
+Local document storage
+
+The deployed version uses free-tier hosting/services where applicable.
+
+🚀 Deployment
+
+The application can be deployed using a free-tier architecture:
+
+                    Internet
+                       │
+                       ▼
+              ┌─────────────────┐
+              │ React Frontend  │
+              │     Render      │
+              └────────┬────────┘
+                       │
+                       ▼
+              ┌─────────────────┐
+              │ Node + Express  │
+              │     Render      │
+              └────────┬────────┘
+                       │
+                       ▼
+              ┌─────────────────┐
+              │ MongoDB Atlas   │
+              │  Free Cluster   │
+              └─────────────────┘
+Deployment Components
+Component	Platform
+Frontend	Render Static Site
+Backend	Render Web Service
+Database	MongoDB Atlas
+Source Control	GitHub
+⚠️ Known Limitation
+
+The current document-management implementation uses local filesystem storage:
+
+backend/uploads/
+
+This approach is suitable for local development and the ₹0 college-project deployment.
+
+However, free web-service environments may use ephemeral filesystems. Therefore, uploaded documents should not be considered permanently durable in the deployed version.
+
+A future production version could replace local storage with a persistent object-storage solution.
+
+⚡ Local Development
+Prerequisites
+
+Install:
+
+Node.js
+npm
+MongoDB
+
+MongoDB should be available locally at:
+
+mongodb://127.0.0.1:27017
+1. Clone the Repository
+git clone https://github.com/thirumurugan1305/Digital-Warranty-and-Service-Tracker.git
+
+cd Digital-Warranty-and-Service-Tracker
+2. Install Dependencies
 npm run install:all
-```
 
-### 2. Configure Environment Variables
+If the root installation script is unavailable, install dependencies separately:
 
-Create `backend/.env`:
+cd backend
+npm install
 
-```env
+cd ../frontend
+npm install
+3. Configure Backend Environment Variables
+
+Create:
+
+backend/.env
+
+Example:
+
 PORT=5000
 MONGODB_URI=mongodb://127.0.0.1:27017/warranty_tracker
-JWT_SECRET=warranty_tracker_super_secret_jwt_key_2026
+JWT_SECRET=your_secure_random_secret
 EXPIRING_SOON_DAYS=30
 NODE_ENV=development
-```
 
-### 3. Start Local MongoDB
+Never commit your real .env file or production secrets to GitHub.
 
-```bash
-# Windows
+4. Start MongoDB
+
+On Windows:
+
 net start MongoDB
-# Or run mongod directly
+
+Or start MongoDB manually using:
+
 mongod
-```
-
-### 4. Launch Backend and Frontend
-
-```bash
-# Terminal 1: Backend Server (Port 5000)
+5. Start the Backend
 cd backend
 npm run dev
 
-# Terminal 2: Frontend Vite Server (Port 5173)
+Backend:
+
+http://localhost:5000
+
+Health check:
+
+http://localhost:5000/api/health
+6. Start the Frontend
+
+Open another terminal:
+
 cd frontend
 npm run dev
-```
 
-Open browser at `http://localhost:5173`
+Frontend:
 
----
+http://localhost:5173
+🧪 Testing
 
-## 🧪 Testing Suite
+The project includes backend, integration, security, and database-related tests.
 
-```bash
-# Run unit and security tests
+Backend Tests
 cd backend
 node tests/run_tests.js
-
-# Run full-stack security & tenant isolation checks
+Full-Stack Integration Tests
 node tests/fullstack_integration_test.js
-
-# Run live MongoDB connection test
+Live MongoDB Test
 node tests/mongo_live_check.js
-
-# Verify frontend production build
+Frontend Production Build
 cd frontend
 npm run build
-```
+📸 Screenshots
 
----
+Screenshots of the application will be added here.
 
-## 📝 License & Acknowledgments
+Recommended screenshots:
 
-Built for the **Digital Warranty & Product Service Tracker** project under ₹0 cost open-source guidelines. MIT License.
+Login page
+Registration page
+Dashboard
+My Products
+Product Details
+Add Product
+Service History
+Documents
+Notifications
+Settings
+🔮 Future Enhancements
+
+Possible future improvements include:
+
+Persistent cloud document storage
+Email warranty reminders
+Mobile application
+Advanced analytics
+Warranty claim workflow
+OCR-based invoice data extraction
+Automated invoice information extraction
+Exportable warranty reports
+Multi-device synchronization
+Progressive Web App support
+📄 License
+
+This project is licensed under the MIT License.
+
+👨‍💻 Project
+
+Digital Warranty & Product Service Tracker
+
+A full-stack academic project developed using React, Node.js, Express, MongoDB, and modern web technologies.
