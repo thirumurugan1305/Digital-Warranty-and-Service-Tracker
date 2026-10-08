@@ -403,22 +403,7 @@ node tests/mongo_live_check.js
 Frontend Production Build
 cd frontend
 npm run build
-📸 Screenshots
 
-Screenshots of the application will be added here.
-
-Recommended screenshots:
-
-Login page
-Registration page
-Dashboard
-My Products
-Product Details
-Add Product
-Service History
-Documents
-Notifications
-Settings
 🔮 Future Enhancements
 
 Possible future improvements include:
